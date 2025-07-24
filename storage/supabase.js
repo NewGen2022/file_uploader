@@ -8,15 +8,19 @@ const BUCKET_NAME = process.env.BUCKET_NAME;
 const uploadFileSB = async (filePath, file) => {
     const fileBuffer = file.buffer;
 
-    const { data, err } = await supabase.storage
+    const { data, error } = await supabase.storage
         .from(BUCKET_NAME)
         .upload(filePath, fileBuffer, {
             contentType: file.mimetype,
         });
 
-    if (err) {
-        console.error('Error uploading file:', err);
-        throw err;
+    if (error) {
+        console.error('Error uploading file:', error);
+        throw error;
+    }
+
+    if (!data) {
+        throw new Error('Upload failed - no data returned from Supabase');
     }
 
     return data;

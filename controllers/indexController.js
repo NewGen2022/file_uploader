@@ -160,6 +160,10 @@ const addFile = async (req, res) => {
         const filePath = `${userId}/${fileName}`;
         const uploadedData = await uploadFileSB(filePath, uploadedFile);
 
+        if (!uploadedData || !uploadedData.fullPath) {
+            throw new Error('Failed to get upload path from storage');
+        }
+
         await createFile(
             fileName, // File name
             uploadedFile.mimetype, // File extension
