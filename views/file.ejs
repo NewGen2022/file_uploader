@@ -16,7 +16,8 @@
 <div id="filePreview">
     <% if (file.extension.startsWith('image/')) { %>
     <img
-        src="https://oyjkiiwvhqlfhsqxanwj.supabase.co/storage/v1/object/public/<%= file.path %>"
+        src="<%= process.env.SUPABASE_PROJECT_URL %>/storage/v1/object/public/<%=
+    file.path %>"
         alt="<%= file.name %>"
     />
     <% } else if (file.extension === 'application/pdf') { %>
